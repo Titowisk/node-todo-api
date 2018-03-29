@@ -1,52 +1,35 @@
-var mongoose = require('mongoose');
+// External imports
+var express = require('express');
+var bodyParser = require('body-parser');
 
-mongoose.Promise = global.Promise; // configs mongoose to use Promises
-mongoose.connect('mongodb://localhost:27017/TodoApp');
+// Local imports
+var {mongoose} = require('./db/mongoose.js');
+var {Todo} = require('./models/todo');
+var {User} = require('./models/users.js');
 
-// var Todo = mongoose.model('Todo', {
-//     text: {
-//         type: String,
-//         required: true,
-//         minlenght: 1,
-//         trim: true
-//     },
-//     completed: {
-//         type: Boolean,
-//         default: false
-//     },
-//     completedAt: {
-//         type: Number,
-//         default: null
-//     }
-// });
+// ES6 new feature: object destructuring
+// var user = {name: 'Andrew', age: 25};
+// var {name} = user;
+// console.log(name);
 
-// var todo1 = new Todo({
-//     text: 'Cook dinner'
-// });
+var app = express();
 
-// todo1.save().then((doc) => {
-//     console.log('Saved todo: ', doc);
-// }, (e) => {
-//     console.log('Unable to save todo');
-// });
+app.use(bodyParser.json());
 
-// challenge
-// User
-var User = mongoose.model('User', {
-    email: {
-        type: String,
-        required: true,
-        trim: true,
-        minlenght: 1
-    }
+app.post('/todos', (req, res) => {
+    // console.log(req.body);
+    var todo = new Todo({
+        text: req.body.text,
+        completed: req.body.completed
+    });
+
+    todo.save().then((doc) => {
+        res.send(doc);
+    }, (e) => {
+        res.status(400).send(e);
+    });
 });
 
-var user1 = new User({
-    email: 'rabelo59@hotmail.com'
-});
-
-user1.save().then((doc) => {
-    console.log('Savend user: ', doc);
-}, (e) => {
-    console.log('Unable to save user');
+app.listen(3000, () => {
+    console.log('Started on port: 3000');
 });
