@@ -52,16 +52,16 @@ app.get('/todos/:id', (req, res) => {
     var id = req.params.id;
 
     if (!ObjectID.isValid(id)) {
-        return res.status(404).send("Invalid ID."); // Problem 1: ID can be invalid
+        return res.status(404).send(); // Problem 1: ID can be invalid
     }
     Todo.findById(id).then((todo) => {
         if(todo) {
             res.send({todo});
         } else {
-            res.status(404).send("No todos found."); // Problem 2: No todos registered
+            res.status(404).send(); // Problem 2: No todos registered
         }
     }).catch((e) => {
-        res.status(400).send("Unable to fetch data."); // Problem 3: An error connecting to database
+        res.status(400).send(); // Problem 3: An error connecting to database
     });
 
 });
