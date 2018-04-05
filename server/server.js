@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var {mongoose} = require('./db/mongoose.js');
 var {Todo} = require('./models/todo');
 var {User} = require('./models/users.js');
+const {ObjectID} = require('mongodb');
 
 // ES6 new feature: object destructuring
 // var user = {name: 'Andrew', age: 25};
@@ -45,6 +46,25 @@ app.get('/todos', (req, res) => {
 //         res.status(400).send(e);
 //     });
 // });
+
+// GET todos/3432434
+app.get('/todos/:id', (req, res) => {
+    var id = req.params.id;
+
+    if (!ObjectID.isValid(id)) {
+        return res.status(404).send("Invalid ID."); // Problem 1: ID can be invalid
+    }
+    Todo.findById(id).then((todo) => {
+        if(todo) {
+            res.send({todo});
+        } else {
+            res.status(404).send("No todos found."); // Problem 2: No todos registered
+        }
+    }).catch((e) => {
+        res.status(400).send("Unable to fetch data."); // Problem 3: An error connecting to database
+    });
+
+});
 
 app.listen(3000, () => {
     console.log('Started on port: 3000');

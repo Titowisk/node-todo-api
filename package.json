@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha server/**/*.test.js",
     "test-watch": "nodemon --exec npm test",
-    "mongoose-queries": "nodemon playground/mongoose-queries.js"
+    "mongoose-queries": "nodemon playground/mongoose-queries.js",
+    "server": "nodemon server/server.js"
   },
   "author": "",
   "license": "ISC",
