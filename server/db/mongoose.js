@@ -8,7 +8,8 @@ let db = {
     localhost: 'mongodb://localhost:27017/TodoApp',
     mlab: 'mongodb://tito:08093941@ds149268.mlab.com:49268/todoapp'
   };
-  mongoose.connect( db.localhost || db.mlab);
+//   mongoose.connect( db.localhost || db.mlab); didn't worked
+mongoose.connect(process.env.PORT ? db.mlab : db.localhost);
 
 module.exports = {
     mongoose
