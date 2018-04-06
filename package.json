@@ -4,10 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server/server.js",
     "test": "mocha server/**/*.test.js",
     "test-watch": "nodemon --exec npm test",
     "mongoose-queries": "nodemon playground/mongoose-queries.js",
     "server": "nodemon server/server.js"
+  },
+  "engines": {
+    "node": "9.7.1"
   },
   "author": "",
   "license": "ISC",
