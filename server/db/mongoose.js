@@ -9,7 +9,7 @@ let db = {
     mlab: 'mongodb://tito:08093941@ds237389.mlab.com:37389/node-todo-api'
   };
 //   mongoose.connect( db.localhost || db.mlab); didn't worked
-mongoose.connect( db.localhost || db.mlab );
+mongoose.connect( process.env.PORT ? db.mlab : db.localhost);
 
 module.exports = {
     mongoose
